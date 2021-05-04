@@ -6,6 +6,7 @@
 Puppet module to install and configure the OpenAFS client
 
 ## Dependencies
+- [puppet/epel](https://forge.puppet.com/puppet/epel)
 - [puppetlabs/firewall](https://forge.puppet.com/puppetlabs/firewall)
 
 ## Reference

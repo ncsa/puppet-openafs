@@ -9,13 +9,11 @@ class openafs::client::packages (
   Array $packages,
 ){
 
-  ## ALSO NEED EPEL INSTALLED
-
   ensure_packages( $prereq_packages )
 
   $packages_defaults = {
     require => [
-      Exec['import openafs gpg key'],
+#      Exec['import openafs gpg key'],
       Package['dkms'],
       Yumrepo['openafs'],
     ]

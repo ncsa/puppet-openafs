@@ -51,7 +51,7 @@ openafs::common::profile_files:
         fi
       fi
     fi
-openafs::common::yumrepo:
+openafs::yumrepo::yumrepo:
   openafs:
     descr: "openafs"
     ensure: "present"
