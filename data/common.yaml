@@ -1,0 +1,6 @@
+---
+openafs::client::firewall::dport: "7000-7009"
+openafs::client::firewall::proto: "udp"
+openafs::client::firewall::source: "141.142.0.0/16"
+openafs::common::cellalias: "ncsa.uiuc.edu ncsa"
+openafs::common::thiscell: "ncsa.uiuc.edu"

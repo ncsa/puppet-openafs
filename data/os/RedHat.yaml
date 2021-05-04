@@ -1,0 +1,63 @@
+---
+openafs::client::packages::prereq_packages:
+  - "dkms"
+  - "kernel-devel"
+openafs::client::packages::packages:
+  - "dkms-openafs"
+  - "openafs"
+  - "openafs-client"
+  - "openafs-docs"
+  - "openafs-krb5"
+openafs::client::service::enable: true
+openafs::client::service::ensure: "running"
+openafs::client::service::service_name: "openafs-client"
+openafs::common::profile_files:
+  /etc/profile.d/00-openafs.csh: |
+    # This file is managed by Puppet.
+    # ONLY RUN FOR NORMAL USERS
+    if ( -x /usr/bin/id ) then
+      if ( "`/usr/bin/id -u`" > 1000 ) then
+        ( /usr/bin/tokens | grep -q "(AFS ID" ) >/dev/null
+        if ( $? != 0 ) then
+          # ATTEMPT TO GET A TOKEN
+          ( /usr/bin/klist | grep -q "krbtgt/NCSA.EDU" ) >/dev/null
+          if ( $? != 0 ) then
+            echo "To access the file system, run the following commands:"
+            echo "  kinit"
+            echo "  aklog"
+            echo
+          else
+            /usr/bin/aklog >/dev/null
+          endif
+        endif
+      endif
+    endif
+  /etc/profile.d/00-openafs.sh: |
+    # This file is managed by Puppet.
+    # ONLY RUN FOR NORMAL USERS
+    if [[ $EUID -ge 1000 ]]; then
+      ( /usr/bin/tokens 2>/dev/null | grep -q "(AFS ID" ) &>/dev/null
+      if [ $? -ne 0 ]
+      then
+        # ATTEMPT TO GET A TOKEN
+        ( /usr/bin/klist 2>/dev/null | grep -q "krbtgt/NCSA.EDU" ) &>/dev/null
+        if [ $? -ne 0 ]; then
+          echo "To access the file system, run the following commands:"
+          echo "  kinit"
+          echo "  aklog"
+          echo
+        else
+          /usr/bin/aklog &>/dev/null
+        fi
+      fi
+    fi
+openafs::common::yumrepo:
+  openafs:
+    descr: "openafs"
+    ensure: "present"
+    enabled: true
+    baseurl: "https://its-repo.ncsa.illinois.edu/openafs/jsbillings/centos-$releasever-$basearch/latest/"
+    skip_if_unavailable: true
+    gpgcheck: true
+    gpgkey: "https://its-repo.ncsa.illinois.edu/openafs/jsbillings/centos-$releasever-$basearch/pubkey.gpg"
+    repo_gpgcheck: false
