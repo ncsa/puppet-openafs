@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'openafs::server::database' do
+describe 'openafs::file_server::packages' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

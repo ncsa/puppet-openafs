@@ -1,6 +1,62 @@
 ---
-openafs::client::firewall::dport: "7000-7009"
+lookup_options:
+  openafs::server_common::files:
+    merge:
+      strategy: "deep"
+      merge_hash_arrays: true
+
+openafs::client::firewall::dports:
+  - "7001"
 openafs::client::firewall::proto: "udp"
-openafs::client::firewall::source: "141.142.0.0/16"
-openafs::common::cellalias: "ncsa.uiuc.edu ncsa"
-openafs::common::thiscell: "ncsa.uiuc.edu"
+openafs::client::firewall::sources:
+  - "0.0.0.0/0"
+
+openafs::cellalias: |
+  changeme.local changeme
+openafs::thiscell: "changeme.local"
+openafs::server::cellservdb: {}
+openafs::server::keyfile_base64: {}
+openafs::server::keyfileext_base64: {}
+openafs::server::krb_conf: "CHANGEME.LOCAL"
+openafs::server::license: {}
+openafs::server::rxkad_keytab_base64: {}
+openafs::server::userlist: |
+  admin
+  backup
+  vdvadmin
+  adminl
+
+openafs::database_server::firewall::dports:
+  - "7002"
+  - "7003"
+  - "7007"
+  - "7008"
+openafs::database_server::firewall::proto: "udp"
+openafs::database_server::firewall::sources:
+  - "0.0.0.0/0"
+
+openafs::file_server::firewall::dports:
+  - "7000"
+  - "7005"
+  - "7007"
+  - "7008"
+openafs::file_server::firewall::proto: "udp"
+openafs::file_server::firewall::sources:
+  - "0.0.0.0/0"
+
+openafs::server_common::files:
+  /var/openafs:
+    ensure: "directory"
+    mode: "0700"
+  /var/openafs/backup:
+    ensure: "directory"
+    mode: "0700"
+  /var/openafs/backup/logs:
+    ensure: "directory"
+    mode: "0755"
+  /var/openafs/local:
+    ensure: "directory"
+    mode: "0750"
+  /var/openafs/logs:
+    ensure: "directory"
+    mode: "0755"

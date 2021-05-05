@@ -1,6 +1,7 @@
-# @summary A short summary of the purpose of this class
+# @summary Install and configure OpenAFS YUM repository
 #
-# A description of what this class does
+# @param yumrepo
+#   Hash of yumrepo parameters for OpenAFS YUM repository
 #
 # @example
 #   include openafs::yumrepo
@@ -15,7 +16,8 @@ class openafs::yumrepo (
   ensure_resources( 'yumrepo', $yumrepo, $yumrepo_defaults )
 
 #  # FOLLOWING WILL NEED TO CHANGE IF openafs REPO CHANGES ITS GPGKEY
-#  #$gpgpubkeyinstalled="rpm -q gpg-pubkey-`echo $(gpg --throw-keyids < /etc/pki/rpm-gpg/RPM-GPG-KEY-openafs) | cut --characters=11-18 | tr [A-Z] [a-z]`"
+#  #$gpgpubkeyinstalled="rpm -q gpg-pubkey-`echo $(gpg --throw-keyids < /etc/pki/rpm-gpg/RPM-GPG-KEY-openafs) | 
+#     cut --characters=11-18 | tr [A-Z] [a-z]`"
 #  $gpgpubkeyinstalled='rpm -q gpg-pubkey-5124ee19-54c66e4b'
 #  file { '/etc/pki/rpm-gpg/RPM-GPG-KEY-openafs':
 #    ensure => present,

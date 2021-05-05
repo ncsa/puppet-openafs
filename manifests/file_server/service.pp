@@ -1,4 +1,4 @@
-# @summary Configure service for OpenAFS client
+# @summary Configure service for OpenAFS file server
 #
 # @param enable
 #   Boolean of whether the default service should be enabled
@@ -10,8 +10,8 @@
 #   String of the name of the default service
 #
 # @example
-#   include openafs::client::service
-class openafs::client::service (
+#   include openafs::file_server::service
+class openafs::file_server::service (
   Boolean $enable,
   String  $ensure,
   String  $service_name,
