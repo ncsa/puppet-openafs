@@ -23,11 +23,11 @@ class openafs::server_common (
   # SPECIFIC FILES FROM LOOKUP
   $thiscell = lookup('openafs::thiscell')
   $cellservdb = lookup('openafs::server::cellservdb')
-  $keyfile_base64 = lookup('openafs::server::keyfile_base64')
-  $keyfileext_base64 = lookup('openafs::server::keyfileext_base64')
+  $keyfile = Sensitive( base64('decode', lookup('openafs::server::keyfile_base64') ) )
+  $keyfileext = Sensitive( base64('decode', lookup('openafs::server::keyfileext_base64') ) )
   $krb_conf = lookup('openafs::server::krb_conf')
-  $license = lookup('openafs::server::license')
-  $rxkad_keytab_base64 = lookup('openafs::server::rxkad_keytab_base64')
+  $license = Sensitive( lookup('openafs::server::license') )
+  $rxkad_keytab = Sensitive( base64('decode', lookup('openafs::server::rxkad_keytab_base64') ) )
   $userlist = lookup('openafs::server::userlist')
 
   file { '/etc/openafs/server/CellServDB':
@@ -41,7 +41,7 @@ class openafs::server_common (
     content => "${krb_conf}\n",
   }
   file { '/etc/openafs/server/License':
-    content => "${license}\n",
+    content => $license,
   }
   file { '/etc/openafs/server/ThisCell':
     content => "${thiscell}\n",
@@ -50,13 +50,13 @@ class openafs::server_common (
     content => $userlist,
   }
   file { '/etc/openafs/server/KeyFile':
-    content => base64('decode', $keyfile_base64),
+    content => $keyfile,
   }
   file { '/etc/openafs/server/KeyFileExt':
-    content => base64('decode', $keyfileext_base64),
+    content => $keyfileext,
   }
   file { '/etc/openafs/server/rxkad.keytab':
-    content => base64('decode', rxkad_keytab_base64),
+    content => $rxkad_keytab,
   }
 
 }
