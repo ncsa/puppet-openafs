@@ -1,21 +1,30 @@
-# @summary A short summary of the purpose of this class
+# @summary Configure the firewall settings for OpenAFS client
 #
-# A description of what this class does
+# @param dports
+#   Array of destination ports that need to be open for the OpenAFS client
+#
+# @param proto
+#   String of protocol that needs to be open for the OpenAFS client
+#
+# @param sources
+#   Array CIDR sources that need to be open for the OpenAFS client
 #
 # @example
 #   include openafs::client::firewall
 class openafs::client::firewall (
-  String $dport,
-  String $proto,
-  String $source,
+  Array[String]  $dports,
+  String         $proto,
+  Array[String]  $sources,
 ) {
 
-  firewall { "200 allow OpenAFS via ${proto} from ${source}":
-    proto    => $proto,
-    dport    => $dport,
-    source   => $source,
-    action   => 'accept',
-    provider => 'iptables',
+  $sources.each | $location, $source |
+  {
+    firewall { "200 allow OpenAFS via ${proto} from ${source}":
+      proto    => $proto,
+      dport    => $dports,
+      source   => $source,
+      action   => 'accept',
+    }
   }
 
 }

@@ -1,10 +1,13 @@
-# @summary A short summary of the purpose of this class
+# @summary Install and configure OpenAFS client
 #
-# A description of what this class does
+# @param profile_files
+#   Hash of profile files related to OpenAFS client usage
 #
 # @example
 #   include openafs::client
-class openafs::client {
+class openafs::client (
+  Hash   $profile_files,
+) {
 
   include epel
   include openafs::common
@@ -20,5 +23,11 @@ class openafs::client {
         -> Class['openafs::common']
           -> Class['openafs::client::rebuild']
             -> Class['openafs::client::service']
+
+  $profile_files.each | $filename, $content | {
+    file { $filename:
+      content => $content,
+    }
+  }
 
 }

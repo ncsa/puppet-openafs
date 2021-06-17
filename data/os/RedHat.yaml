@@ -8,10 +8,7 @@ openafs::client::packages::packages:
   - "openafs-client"
   - "openafs-docs"
   - "openafs-krb5"
-openafs::client::service::enable: true
-openafs::client::service::ensure: "running"
-openafs::client::service::service_name: "openafs-client"
-openafs::common::profile_files:
+openafs::client::profile_files:
   /etc/profile.d/00-openafs.csh: |
     # This file is managed by Puppet.
     # ONLY RUN FOR NORMAL USERS
@@ -51,13 +48,46 @@ openafs::common::profile_files:
         fi
       fi
     fi
+openafs::client::service::enable: true
+openafs::client::service::ensure: "running"
+openafs::client::service::service_name: "openafs-client"
+
+#openafs::database_server::packages::prereq_packages: {}
+#  - "dkms"
+#  - "kernel-devel"
+openafs::database_server::packages::packages:
+#  - "dkms-openafs"
+  - "openafs"
+  - "openafs-docs"
+  - "openafs-krb5"
+  - "openafs-server"
+#  - "openafs-transarc-server"
+openafs::database_server::service::enable: true
+openafs::database_server::service::ensure: "running"
+openafs::database_server::service::service_name: "openafs-server"
+
+openafs::file_server::packages::prereq_packages:
+  - "dkms"
+  - "kernel-devel"
+openafs::file_server::packages::packages:
+  - "dkms-openafs"
+  - "openafs"
+  - "openafs-client"
+  - "openafs-docs"
+  - "openafs-krb5"
+  - "openafs-server"
+#  - "openafs-transarc-server"
+openafs::file_server::service::enable: true
+openafs::file_server::service::ensure: "running"
+openafs::file_server::service::service_name: "openafs-server"
+
 openafs::yumrepo::yumrepo:
   openafs:
     descr: "openafs"
     ensure: "present"
     enabled: true
-    baseurl: "https://its-repo.ncsa.illinois.edu/openafs/jsbillings/centos-$releasever-$basearch/latest/"
+    baseurl: "https://copr-be.cloud.fedoraproject.org/results/jsbillings/openafs/epel-$releasever-$basearch/"
     skip_if_unavailable: true
     gpgcheck: true
-    gpgkey: "https://its-repo.ncsa.illinois.edu/openafs/jsbillings/centos-$releasever-$basearch/pubkey.gpg"
+    gpgkey: "https://copr-be.cloud.fedoraproject.org/results/jsbillings/openafs/pubkey.gpg"
     repo_gpgcheck: false

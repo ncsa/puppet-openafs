@@ -6,21 +6,30 @@
 
 ### Classes
 
-* [`openafs`](#openafs): A short summary of the purpose of this class
-* [`openafs::client`](#openafsclient): A short summary of the purpose of this class
-* [`openafs::client::firewall`](#openafsclientfirewall): A short summary of the purpose of this class
-* [`openafs::client::packages`](#openafsclientpackages): A short summary of the purpose of this class
-* [`openafs::client::rebuild`](#openafsclientrebuild): A short summary of the purpose of this class
-* [`openafs::client::service`](#openafsclientservice): A short summary of the purpose of this class
-* [`openafs::common`](#openafscommon): A short summary of the purpose of this class
-* [`openafs::server::database`](#openafsserverdatabase): A short summary of the purpose of this class
-* [`openafs::server::file`](#openafsserverfile): A short summary of the purpose of this class
+* [`openafs`](#openafs): Install and configure OpenAFS packages and services
+* [`openafs::client`](#openafsclient): Install and configure OpenAFS client
+* [`openafs::client::firewall`](#openafsclientfirewall): Configure the firewall settings for OpenAFS client
+* [`openafs::client::packages`](#openafsclientpackages): Install packages for OpenAFS client
+* [`openafs::client::rebuild`](#openafsclientrebuild): Rebuild the kernel module for OpenAFS when needed
+* [`openafs::client::service`](#openafsclientservice): Configure service for OpenAFS client
+* [`openafs::common`](#openafscommon): Configure settings common to all OpenAFS services
+* [`openafs::database_server`](#openafsdatabase_server): Install and configure OpenAFS database server
+* [`openafs::database_server::firewall`](#openafsdatabase_serverfirewall): Configure the firewall settings for OpenAFS database server
+* [`openafs::database_server::packages`](#openafsdatabase_serverpackages): Install packages for OpenAFS database server
+* [`openafs::database_server::service`](#openafsdatabase_serverservice): Configure service for OpenAFS database server
+* [`openafs::file_server`](#openafsfile_server): Install and configure OpenAFS file server
+* [`openafs::file_server::firewall`](#openafsfile_serverfirewall): Configure the firewall settings for OpenAFS file server
+* [`openafs::file_server::packages`](#openafsfile_serverpackages): Install packages for OpenAFS file server
+* [`openafs::file_server::rebuild`](#openafsfile_serverrebuild): Rebuild the kernel module for OpenAFS when needed
+* [`openafs::file_server::service`](#openafsfile_serverservice): Configure service for OpenAFS file server
+* [`openafs::server_common`](#openafsserver_common): Configure common settings to all OpenAFS server types
+* [`openafs::yumrepo`](#openafsyumrepo): Install and configure OpenAFS YUM repository
 
 ## Classes
 
 ### <a name="openafs"></a>`openafs`
 
-A description of what this class does
+Install and configure OpenAFS packages and services
 
 #### Examples
 
@@ -32,7 +41,7 @@ include openafs
 
 ### <a name="openafsclient"></a>`openafs::client`
 
-A description of what this class does
+Install and configure OpenAFS client
 
 #### Examples
 
@@ -42,9 +51,21 @@ A description of what this class does
 include openafs::client
 ```
 
+#### Parameters
+
+The following parameters are available in the `openafs::client` class:
+
+* [`profile_files`](#profile_files)
+
+##### <a name="profile_files"></a>`profile_files`
+
+Data type: `Hash`
+
+Hash of profile files related to OpenAFS client usage
+
 ### <a name="openafsclientfirewall"></a>`openafs::client::firewall`
 
-A description of what this class does
+Configure the firewall settings for OpenAFS client
 
 #### Examples
 
@@ -58,31 +79,31 @@ include openafs::client::firewall
 
 The following parameters are available in the `openafs::client::firewall` class:
 
-* [`dport`](#dport)
+* [`dports`](#dports)
 * [`proto`](#proto)
-* [`source`](#source)
+* [`sources`](#sources)
 
-##### <a name="dport"></a>`dport`
+##### <a name="dports"></a>`dports`
 
-Data type: `String`
+Data type: `Array[String]`
 
-
+Array of destination ports that need to be open for the OpenAFS client
 
 ##### <a name="proto"></a>`proto`
 
 Data type: `String`
 
+String of protocol that needs to be open for the OpenAFS client
 
+##### <a name="sources"></a>`sources`
 
-##### <a name="source"></a>`source`
+Data type: `Array[String]`
 
-Data type: `String`
-
-
+Array CIDR sources that need to be open for the OpenAFS client
 
 ### <a name="openafsclientpackages"></a>`openafs::client::packages`
 
-A description of what this class does
+Install packages for OpenAFS client
 
 #### Examples
 
@@ -96,24 +117,24 @@ include openafs::client::packages
 
 The following parameters are available in the `openafs::client::packages` class:
 
-* [`prereq_packages`](#prereq_packages)
 * [`packages`](#packages)
-
-##### <a name="prereq_packages"></a>`prereq_packages`
-
-Data type: `Array`
-
-
+* [`prereq_packages`](#prereq_packages)
 
 ##### <a name="packages"></a>`packages`
 
 Data type: `Array`
 
+Array of packages that need to be installed for the OpenAFS client
 
+##### <a name="prereq_packages"></a>`prereq_packages`
+
+Data type: `Array`
+
+Array of prerequisite packages that need to be installed for the OpenAFS client
 
 ### <a name="openafsclientrebuild"></a>`openafs::client::rebuild`
 
-A description of what this class does
+Rebuild the kernel module for OpenAFS when needed
 
 #### Examples
 
@@ -125,7 +146,7 @@ include openafs::client::rebuild
 
 ### <a name="openafsclientservice"></a>`openafs::client::service`
 
-A description of what this class does
+Configure service for OpenAFS client
 
 #### Examples
 
@@ -147,23 +168,23 @@ The following parameters are available in the `openafs::client::service` class:
 
 Data type: `Boolean`
 
-
+Boolean of whether the default service should be enabled
 
 ##### <a name="ensure"></a>`ensure`
 
 Data type: `String`
 
-
+String of how the default service should be ensured
 
 ##### <a name="service_name"></a>`service_name`
 
 Data type: `String`
 
-
+String of the name of the default service
 
 ### <a name="openafscommon"></a>`openafs::common`
 
-A description of what this class does
+Configure settings common to all OpenAFS services
 
 #### Examples
 
@@ -173,60 +194,294 @@ A description of what this class does
 include openafs::common
 ```
 
+### <a name="openafsdatabase_server"></a>`openafs::database_server`
+
+Install and configure OpenAFS database server
+
+#### Examples
+
+##### 
+
+```puppet
+include openafs::database_server
+```
+
+### <a name="openafsdatabase_serverfirewall"></a>`openafs::database_server::firewall`
+
+Configure the firewall settings for OpenAFS database server
+
+#### Examples
+
+##### 
+
+```puppet
+include openafs::database_server::firewall
+```
+
 #### Parameters
 
-The following parameters are available in the `openafs::common` class:
+The following parameters are available in the `openafs::database_server::firewall` class:
 
-* [`cellalias`](#cellalias)
-* [`profile_files`](#profile_files)
-* [`thiscell`](#thiscell)
-* [`yumrepo`](#yumrepo)
+* [`dports`](#dports)
+* [`proto`](#proto)
+* [`sources`](#sources)
 
-##### <a name="cellalias"></a>`cellalias`
+##### <a name="dports"></a>`dports`
+
+Data type: `Array[String]`
+
+Array of destination ports that need to be open for the OpenAFS database server
+
+##### <a name="proto"></a>`proto`
 
 Data type: `String`
 
+String of protocol that needs to be open for the OpenAFS database server
 
+##### <a name="sources"></a>`sources`
 
-##### <a name="profile_files"></a>`profile_files`
+Data type: `Array[String]`
+
+Array CIDR sources that need to be open for the OpenAFS database server
+
+### <a name="openafsdatabase_serverpackages"></a>`openafs::database_server::packages`
+
+Install packages for OpenAFS database server
+
+#### Examples
+
+##### 
+
+```puppet
+include openafs::database_server::packages
+```
+
+#### Parameters
+
+The following parameters are available in the `openafs::database_server::packages` class:
+
+* [`packages`](#packages)
+
+##### <a name="packages"></a>`packages`
+
+Data type: `Array`
+
+Array of packages that need to be installed for the OpenAFS database server
+
+### <a name="openafsdatabase_serverservice"></a>`openafs::database_server::service`
+
+Configure service for OpenAFS database server
+
+#### Examples
+
+##### 
+
+```puppet
+include openafs::database_server::service
+```
+
+#### Parameters
+
+The following parameters are available in the `openafs::database_server::service` class:
+
+* [`enable`](#enable)
+* [`ensure`](#ensure)
+* [`service_name`](#service_name)
+
+##### <a name="enable"></a>`enable`
+
+Data type: `Boolean`
+
+Boolean of whether the default service should be enabled
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `String`
+
+String of how the default service should be ensured
+
+##### <a name="service_name"></a>`service_name`
+
+Data type: `String`
+
+String of the name of the default service
+
+### <a name="openafsfile_server"></a>`openafs::file_server`
+
+Install and configure OpenAFS file server
+
+#### Examples
+
+##### 
+
+```puppet
+include openafs::file_server
+```
+
+### <a name="openafsfile_serverfirewall"></a>`openafs::file_server::firewall`
+
+Configure the firewall settings for OpenAFS file server
+
+#### Examples
+
+##### 
+
+```puppet
+include openafs::file_server::firewall
+```
+
+#### Parameters
+
+The following parameters are available in the `openafs::file_server::firewall` class:
+
+* [`dports`](#dports)
+* [`proto`](#proto)
+* [`sources`](#sources)
+
+##### <a name="dports"></a>`dports`
+
+Data type: `Array[String]`
+
+Array of destination ports that need to be open for the OpenAFS file server
+
+##### <a name="proto"></a>`proto`
+
+Data type: `String`
+
+String of protocol that needs to be open for the OpenAFS file server
+
+##### <a name="sources"></a>`sources`
+
+Data type: `Array[String]`
+
+Array CIDR sources that need to be open for the OpenAFS file server
+
+### <a name="openafsfile_serverpackages"></a>`openafs::file_server::packages`
+
+Install packages for OpenAFS file server
+
+#### Examples
+
+##### 
+
+```puppet
+include openafs::file_server::packages
+```
+
+#### Parameters
+
+The following parameters are available in the `openafs::file_server::packages` class:
+
+* [`packages`](#packages)
+* [`prereq_packages`](#prereq_packages)
+
+##### <a name="packages"></a>`packages`
+
+Data type: `Array`
+
+Array of packages that need to be installed for the OpenAFS file server
+
+##### <a name="prereq_packages"></a>`prereq_packages`
+
+Data type: `Array`
+
+Array of prerequisite packages that need to be installed for the OpenAFS file server
+
+### <a name="openafsfile_serverrebuild"></a>`openafs::file_server::rebuild`
+
+Rebuild the kernel module for OpenAFS when needed
+
+#### Examples
+
+##### 
+
+```puppet
+include openafs::file_server::rebuild
+```
+
+### <a name="openafsfile_serverservice"></a>`openafs::file_server::service`
+
+Configure service for OpenAFS file server
+
+#### Examples
+
+##### 
+
+```puppet
+include openafs::file_server::service
+```
+
+#### Parameters
+
+The following parameters are available in the `openafs::file_server::service` class:
+
+* [`enable`](#enable)
+* [`ensure`](#ensure)
+* [`service_name`](#service_name)
+
+##### <a name="enable"></a>`enable`
+
+Data type: `Boolean`
+
+Boolean of whether the default service should be enabled
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `String`
+
+String of how the default service should be ensured
+
+##### <a name="service_name"></a>`service_name`
+
+Data type: `String`
+
+String of the name of the default service
+
+### <a name="openafsserver_common"></a>`openafs::server_common`
+
+Configure common settings to all OpenAFS server types
+
+#### Examples
+
+##### 
+
+```puppet
+include openafs::server_common
+```
+
+#### Parameters
+
+The following parameters are available in the `openafs::server_common` class:
+
+* [`files`](#files)
+
+##### <a name="files"></a>`files`
 
 Data type: `Hash`
 
+Hash of common server config files for OpenAFS servers
 
+### <a name="openafsyumrepo"></a>`openafs::yumrepo`
 
-##### <a name="thiscell"></a>`thiscell`
+Install and configure OpenAFS YUM repository
 
-Data type: `String`
+#### Examples
 
+##### 
 
+```puppet
+include openafs::yumrepo
+```
+
+#### Parameters
+
+The following parameters are available in the `openafs::yumrepo` class:
+
+* [`yumrepo`](#yumrepo)
 
 ##### <a name="yumrepo"></a>`yumrepo`
 
 Data type: `Hash`
 
-
-
-### <a name="openafsserverdatabase"></a>`openafs::server::database`
-
-A description of what this class does
-
-#### Examples
-
-##### 
-
-```puppet
-include openafs::server::database
-```
-
-### <a name="openafsserverfile"></a>`openafs::server::file`
-
-A description of what this class does
-
-#### Examples
-
-##### 
-
-```puppet
-include openafs::server::file
-```
+Hash of yumrepo parameters for OpenAFS YUM repository
 

@@ -1,6 +1,4 @@
-# @summary A short summary of the purpose of this class
-#
-# A description of what this class does
+# @summary Install and configure OpenAFS packages and services
 #
 # @example
 #   include openafs
