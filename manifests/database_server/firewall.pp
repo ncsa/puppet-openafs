@@ -20,10 +20,10 @@ class openafs::database_server::firewall (
   $sources.each | $location, $source |
   {
     firewall { "200 allow OpenAFS via ${proto} from ${source}":
-      proto    => $proto,
-      dport    => $dports,
-      source   => $source,
-      action   => 'accept',
+      proto  => $proto,
+      dport  => $dports,
+      source => $source,
+      action => 'accept',
     }
   }
 

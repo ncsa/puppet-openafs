@@ -14,13 +14,13 @@ openafs::client::firewall::sources:
 openafs::cellalias: |
   changeme.local changeme
 openafs::thiscell: "changeme.local"
-openafs::server::cellservdb: {}
-openafs::server::keyfile_base64: {}
-openafs::server::keyfileext_base64: {}
-openafs::server::krb_conf: "CHANGEME.LOCAL"
-openafs::server::license: {}
-openafs::server::rxkad_keytab_base64: {}
-openafs::server::userlist: |
+openafs::server_common::cellservdb: {}
+openafs::server_common::keyfile_base64: {}
+openafs::server_common::keyfileext_base64: {}
+openafs::server_common::krb_conf: "CHANGEME.LOCAL"
+openafs::server_common::license: {}
+openafs::server_common::rxkad_keytab_base64: {}
+openafs::server_common::userlist: |
   admin
   backup
   vdvadmin

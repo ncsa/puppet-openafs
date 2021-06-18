@@ -32,12 +32,12 @@ To install and configure the **OpenAFS file server**:
 The following parameters need to be set:
 - `openafs::cellalias`: String of your OpenAFS CellAlias content
 - `openafs::thiscell`: String of your OpenAFS ThisCell content
-- `openafs::server::cellservdb`: String of your OpenAFS CellServDB content
-- `openafs::server::keyfile_base64`: String of your base64 encoded KeyFile content
-- `openafs::server::keyfileext_base64`: String of your base64 encoded KeyFileExt content
-- `openafs::server::krb_conf`: String of your OpenAFS krb.conf content (Kerberos realm name)
-- `openafs::server::license`: String of your OpenAFS License content
-- `openafs::server::rxkad_keytab_base64`: String of your base64 encoded rxkad.keytab content
+- `openafs::server_common::cellservdb`: String of your OpenAFS CellServDB content
+- `openafs::server_common::keyfile_base64`: String of your base64 encoded KeyFile content
+- `openafs::server_common::keyfileext_base64`: String of your base64 encoded KeyFileExt content
+- `openafs::server_common::krb_conf`: String of your OpenAFS krb.conf content (Kerberos realm name)
+- `openafs::server_common::license`: String of your OpenAFS License content
+- `openafs::server_common::rxkad_keytab_base64`: String of your base64 encoded rxkad.keytab content
 
 ## Dependencies
 - [puppet/epel](https://forge.puppet.com/puppet/epel)
