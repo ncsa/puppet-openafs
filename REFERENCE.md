@@ -453,13 +453,62 @@ include openafs::server_common
 
 The following parameters are available in the `openafs::server_common` class:
 
+* [`cellservdb`](#cellservdb)
 * [`files`](#files)
+* [`keyfile_base64`](#keyfile_base64)
+* [`keyfileext_base64`](#keyfileext_base64)
+* [`krb_conf`](#krb_conf)
+* [`license`](#license)
+* [`rxkad_keytab_base64`](#rxkad_keytab_base64)
+* [`userlist`](#userlist)
+
+##### <a name="cellservdb"></a>`cellservdb`
+
+Data type: `String`
+
+String of CellServDB config file contents for OpenAFS servers
 
 ##### <a name="files"></a>`files`
 
 Data type: `Hash`
 
 Hash of common server config files for OpenAFS servers
+
+##### <a name="keyfile_base64"></a>`keyfile_base64`
+
+Data type: `String`
+
+String of base64 encoding of the KeyFile file contents for OpenAFS servers
+
+##### <a name="keyfileext_base64"></a>`keyfileext_base64`
+
+Data type: `String`
+
+String of base64 encoding of the KeyFileExt file contents for OpenAFS servers
+
+##### <a name="krb_conf"></a>`krb_conf`
+
+Data type: `String`
+
+String of krb.conf config file contents for OpenAFS servers
+
+##### <a name="license"></a>`license`
+
+Data type: `String`
+
+String of License file contents for OpenAFS servers
+
+##### <a name="rxkad_keytab_base64"></a>`rxkad_keytab_base64`
+
+Data type: `String`
+
+String of base64 encoding of the rxkad.keytab file contents for OpenAFS servers
+
+##### <a name="userlist"></a>`userlist`
+
+Data type: `String`
+
+String of UserList file contents for OpenAFS servers
 
 ### <a name="openafsyumrepo"></a>`openafs::yumrepo`
 

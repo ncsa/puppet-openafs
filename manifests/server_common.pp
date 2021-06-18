@@ -1,12 +1,40 @@
 # @summary Configure common settings to all OpenAFS server types
 #
+# @param cellservdb
+#   String of CellServDB config file contents for OpenAFS servers
+#
 # @param files
 #   Hash of common server config files for OpenAFS servers
+#
+# @param keyfile_base64
+#   String of base64 encoding of the KeyFile file contents for OpenAFS servers
+#
+# @param keyfileext_base64
+#   String of base64 encoding of the KeyFileExt file contents for OpenAFS servers
+#
+# @param krb_conf
+#   String of krb.conf config file contents for OpenAFS servers
+#
+# @param license
+#   String of License file contents for OpenAFS servers
+#
+# @param rxkad_keytab_base64
+#   String of base64 encoding of the rxkad.keytab file contents for OpenAFS servers
+#
+# @param userlist
+#   String of UserList file contents for OpenAFS servers
 #
 # @example
 #   include openafs::server_common
 class openafs::server_common (
+  String $cellservdb,
   Hash   $files,
+  String $keyfile_base64,
+  String $keyfileext_base64,
+  String $krb_conf,
+  String $license,
+  String $rxkad_keytab_base64,
+  String $userlist,
 ) {
 
   File {
@@ -22,13 +50,10 @@ class openafs::server_common (
 
   # SPECIFIC FILES FROM LOOKUP
   $thiscell = lookup('openafs::thiscell')
-  $cellservdb = lookup('openafs::server::cellservdb')
-  $keyfile = Sensitive( base64('decode', lookup('openafs::server::keyfile_base64') ) )
-  $keyfileext = Sensitive( base64('decode', lookup('openafs::server::keyfileext_base64') ) )
-  $krb_conf = lookup('openafs::server::krb_conf')
-  $license = Sensitive( lookup('openafs::server::license') )
-  $rxkad_keytab = Sensitive( base64('decode', lookup('openafs::server::rxkad_keytab_base64') ) )
-  $userlist = lookup('openafs::server::userlist')
+  # DECODE BASE64 PARAMETERS
+  $keyfile = Sensitive( base64('decode', $keyfile_base64 ) )
+  $keyfileext = Sensitive( base64('decode', $keyfileext_base64 ) )
+  $rxkad_keytab = Sensitive( base64('decode', $rxkad_keytab_base64 ) )
 
   file { '/etc/openafs/server/CellServDB':
     content => $cellservdb,
@@ -41,7 +66,7 @@ class openafs::server_common (
     content => "${krb_conf}\n",
   }
   file { '/etc/openafs/server/License':
-    content => $license,
+    content => Sensitive($license),
   }
   file { '/etc/openafs/server/ThisCell':
     content => "${thiscell}\n",
