@@ -57,9 +57,9 @@ openafs::client::service::service_name: "openafs-client"
 #  - "kernel-devel"
 openafs::database_server::packages::packages:
 #  - "dkms-openafs"
-  - "openafs"
-  - "openafs-docs"
-  - "openafs-krb5"
+#  - "openafs"
+#  - "openafs-docs"
+#  - "openafs-krb5"
   - "openafs-server"
 #  - "openafs-transarc-server"
 openafs::database_server::service::enable: true

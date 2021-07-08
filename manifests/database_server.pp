@@ -4,7 +4,7 @@
 #   include openafs::database_server
 class openafs::database_server {
 
-#  include epel
+  include openafs::client
   include openafs::common
   include openafs::yumrepo
   include openafs::database_server::firewall
@@ -12,11 +12,11 @@ class openafs::database_server {
   include openafs::database_server::service
   include openafs::server_common
 
-#  Class['epel'] -> 
   Class['openafs::yumrepo']
-    -> Class['openafs::database_server::packages']
-      -> Class['openafs::common']
-        -> Class['openafs::server_common']
-          -> Class['openafs::database_server::service']
+    -> Class['openafs::client']
+      -> Class['openafs::database_server::packages']
+        -> Class['openafs::common']
+          -> Class['openafs::server_common']
+            -> Class['openafs::database_server::service']
 
 }
