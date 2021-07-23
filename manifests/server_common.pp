@@ -57,6 +57,7 @@ class openafs::server_common (
 
   file { '/etc/openafs/server/CellServDB':
     content => $cellservdb,
+    mode   => '0644',
   }
   file { '/etc/openafs/CellServDB':
     ensure => 'link',
