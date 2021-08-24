@@ -16,10 +16,8 @@ class openafs::file_server::service (
   String  $ensure,
   String  $service_name,
 ) {
-
   service { $service_name:
     ensure => $ensure,
-    enable => $enable
+    enable => $enable,
   }
-
 }

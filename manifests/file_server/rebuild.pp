@@ -3,7 +3,6 @@
 # @example
 #   include openafs::file_server::rebuild
 class openafs::file_server::rebuild {
-
   # IF AFS FILESYSTEM IS UNAVAILABLE
   # INDICATES OpenAFS OR kernel HAVE BEEN UPDATED
   # CAN BE RESOLVED BY REBUILDING VIA REINSTALLING THE dkms-openafs PACKAGE
@@ -20,5 +19,4 @@ class openafs::file_server::rebuild {
       Package['openafs-client'],
     ],
   }
-
 }

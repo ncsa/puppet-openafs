@@ -11,17 +11,14 @@
 class openafs::client::packages (
   Array $packages,
   Array $prereq_packages,
-){
-
+) {
   ensure_packages( $prereq_packages )
 
   $packages_defaults = {
     require => [
-#      Exec['import openafs gpg key'],
       Package['dkms'],
-      Yumrepo['openafs'],
-    ]
+      Class['openafs::repos'],
+    ],
   }
   ensure_packages( $packages, $packages_defaults )
-
 }

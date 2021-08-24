@@ -1,5 +1,17 @@
 # @summary Configure common settings to all OpenAFS server types
 #
+# @param afsbackupdir
+#   String of path to AFS server backup directory
+#
+# @param afsconfdir
+#   String of path to AFS server configuration directory
+#
+# @param afslocaldir
+#   String of path to AFS server local directory
+#
+# @param afslogsdir
+#   String of path to AFS server logs directory
+#
 # @param cellservdb
 #   String of CellServDB config file contents for OpenAFS servers
 #
@@ -27,6 +39,10 @@
 # @example
 #   include openafs::server_common
 class openafs::server_common (
+  String $afsbackupdir,
+  String $afsconfdir,
+  String $afslocaldir,
+  String $afslogsdir,
   String $cellservdb,
   Hash   $files,
   String $keyfile_base64,
@@ -36,12 +52,44 @@ class openafs::server_common (
   String $rxkad_keytab_base64,
   String $userlist,
 ) {
-
   File {
     owner  => root,
     group  => root,
     ensure => file,
     mode   => '0640',
+  }
+
+  $afslocaldir_parent_path = dirname( $afslocaldir )
+
+  file { $afslocaldir_parent_path :
+    ensure => 'directory',
+    mode   => '0700',
+  }
+  file { $afslocaldir :
+    ensure => 'directory',
+    mode   => '0700',
+  }
+  file { "${afslocaldir}/local" :
+    ensure => 'directory',
+    mode   => '0750',
+  }
+
+  file { $afsbackupdir :
+    ensure => 'directory',
+    mode   => '0700',
+  }
+  file { $afslogsdir :
+    ensure => 'directory',
+    mode   => '0755',
+  }
+  file { "${afsbackupdir}/logs" :
+    ensure => 'directory',
+    mode   => '0755',
+  }
+
+  file { $afsconfdir :
+    ensure => 'directory',
+    mode   => '0700',
   }
 
   ensure_resources('file', $files )
@@ -50,43 +98,46 @@ class openafs::server_common (
 
   # SPECIFIC FILES FROM LOOKUP
   $thiscell = lookup('openafs::thiscell')
+  $viceetcdir = lookup('openafs::common::viceetcdir')
   # DECODE BASE64 PARAMETERS
   $keyfile = Sensitive( base64('decode', $keyfile_base64 ) )
   $keyfileext = Sensitive( base64('decode', $keyfileext_base64 ) )
   $rxkad_keytab = Sensitive( base64('decode', $rxkad_keytab_base64 ) )
 
-  file { '/etc/openafs/server/CellServDB':
+  file { "${afsconfdir}/CellServDB":
     content => $cellservdb,
     mode    => '0644',
   }
-  file { '/etc/openafs/CellServDB':
-    ensure => 'link',
-    target => '/etc/openafs/server/CellServDB',
+  file { "${viceetcdir}/CellServDB":
+    ensure  => 'link',
+    target  => "${afsconfdir}/CellServDB",
+    require => [
+      Class[openafs::client],
+    ],
   }
-  file { '/etc/openafs/server/krb.conf':
+  file { "${afsconfdir}/krb.conf":
     content => "${krb_conf}\n",
   }
-  file { '/etc/openafs/server/License':
+  file { "${afsconfdir}/License":
     content => Sensitive($license),
   }
-  file { '/etc/openafs/server/ThisCell':
+  file { "${afsconfdir}/ThisCell":
     content => "${thiscell}\n",
   }
-  file { '/etc/openafs/server/UserList':
+  file { "${afsconfdir}/UserList":
     content => $userlist,
   }
-  file { '/etc/openafs/server/KeyFile':
+  file { "${afsconfdir}/KeyFile":
     content => $keyfile,
   }
-  file { '/etc/openafs/server/KeyFileExt':
+  file { "${afsconfdir}/KeyFileExt":
     content => $keyfileext,
   }
-  file { '/etc/openafs/server/rxkad.keytab':
+  file { "${afsconfdir}/rxkad.keytab":
     content => $rxkad_keytab,
   }
-  file { '/var/openafs/NetInfo':
-    content => $facts['ipaddress'],
+  file { "${afslocaldir}/NetInfo":
+    content => $facts['networking']['ip'],
     mode    => '0644',
   }
-
 }

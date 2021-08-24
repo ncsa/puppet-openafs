@@ -11,19 +11,14 @@ openafs::client::firewall::proto: "udp"
 openafs::client::firewall::sources:
   - "0.0.0.0/0"
 
+openafs::client::rebuild::testfile: "user"
+
 openafs::cellalias: |
   changeme.local changeme
 openafs::thiscell: "changeme.local"
-openafs::server_common::cellservdb: {}
-openafs::server_common::keyfile_base64: {}
-openafs::server_common::keyfileext_base64: {}
-openafs::server_common::krb_conf: "CHANGEME.LOCAL"
-openafs::server_common::license: {}
-openafs::server_common::rxkad_keytab_base64: {}
-openafs::server_common::userlist: |
-  admin
-  vdvadmin
-  adminl
+
+openafs::common::viceetcdir: "/usr/vice/etc"  # transarc paths
+#openafs::common::viceetcdir: "/etc/openafs"   # non-transarc
 
 openafs::database_server::firewall::dports:
   - "7002"
@@ -43,19 +38,25 @@ openafs::file_server::firewall::proto: "udp"
 openafs::file_server::firewall::sources:
   - "0.0.0.0/0"
 
-openafs::server_common::files:
-  /var/openafs:
-    ensure: "directory"
-    mode: "0700"
-  /var/openafs/backup:
-    ensure: "directory"
-    mode: "0700"
-  /var/openafs/backup/logs:
-    ensure: "directory"
-    mode: "0755"
-  /var/openafs/local:
-    ensure: "directory"
-    mode: "0750"
-  /var/openafs/logs:
-    ensure: "directory"
-    mode: "0755"
+openafs::server_common::afsbackupdir: "/usr/afs/backup"      # transarc paths
+#openafs::server_common::afsbackupdir: "/var/openafs/backup"  # non-transarc
+openafs::server_common::afsconfdir: "/usr/afs/etc"           # transarc paths
+#openafs::server_common::afsconfdir: "/etc/openafs/server"    # non-transarc
+openafs::server_common::afslocaldir: "/usr/afs/local"        # transarc paths
+#openafs::server_common::afslocaldir: "/var/openafs"          # non-transarc
+openafs::server_common::afslogsdir: "/usr/afs/logs"          # transarc paths
+#openafs::server_common::afslogsdir: "/var/openafs/logs"      # non-transarc
+
+openafs::server_common::files: []
+
+openafs::server_common::cellservdb: {}
+openafs::server_common::keyfile_base64: {}
+openafs::server_common::keyfileext_base64: {}
+openafs::server_common::krb_conf: "CHANGEME.LOCAL"
+openafs::server_common::license: {}
+openafs::server_common::rxkad_keytab_base64: {}
+openafs::server_common::userlist: |
+  admin
+  backup
+  vdvadmin
+  adminl

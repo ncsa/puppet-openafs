@@ -39,6 +39,19 @@ The following parameters need to be set:
 - `openafs::server_common::license`: String of your OpenAFS License content
 - `openafs::server_common::rxkad_keytab_base64`: String of your base64 encoded rxkad.keytab content
 
+### Transarc Paths
+
+By default this module assumes you are using the legacy "Transarc" paths with the OpenAFS. If you need to change the path types, you'll need to change the following parameters:
+- `openafs::common::viceetcdir`
+- `openafs::server_common::afsbackupdir`
+- `openafs::server_common::afsconfdir`
+- `openafs::server_common::afslocaldir`
+- `openafs::server_common::afslogsdir`
+
+See the following for documentation about these directories for legacy transarc vs newer default paths:
+- http://git.openafs.org/?p=openafs.git;a=blob;f=INSTALL#l122 
+- http://git.openafs.org/?p=openafs.git;a=blob;f=src/cf/dirpaths.m4
+
 ## Dependencies
 - [puppet/epel](https://forge.puppet.com/puppet/epel)
 - [puppetlabs/firewall](https://forge.puppet.com/puppetlabs/firewall)
