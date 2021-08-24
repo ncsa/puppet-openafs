@@ -7,6 +7,7 @@ class openafs::common {
   $puppet_file_header = '# This file is managed by Puppet; changes may be overwritten'
 
   # SPECIFIC FILES FROM LOOKUP
+  $configpath = lookup('openafs::configpath')
   $cellalias = lookup('openafs::cellalias')
   $thiscell = lookup('openafs::thiscell')
 
@@ -20,10 +21,10 @@ class openafs::common {
     ],
   }
 
-  file { '/etc/openafs/CellAlias':
+  file { "${configpath}/CellAlias":
     content => $cellalias,
   }
-  file { '/etc/openafs/ThisCell':
+  file { "${configpath}/ThisCell":
     content => "${thiscell}\n",
   }
 

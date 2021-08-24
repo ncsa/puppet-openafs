@@ -13,6 +13,7 @@ openafs::client::firewall::sources:
 
 openafs::cellalias: |
   changeme.local changeme
+openafs::configpath: "/etc/openafs"
 openafs::thiscell: "changeme.local"
 openafs::server_common::cellservdb: {}
 openafs::server_common::keyfile_base64: {}

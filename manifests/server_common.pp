@@ -49,39 +49,40 @@ class openafs::server_common (
   $puppet_file_header = '# This file is managed by Puppet; changes may be overwritten'
 
   # SPECIFIC FILES FROM LOOKUP
+  $configpath = lookup('openafs::configpath')
   $thiscell = lookup('openafs::thiscell')
   # DECODE BASE64 PARAMETERS
   $keyfile = Sensitive( base64('decode', $keyfile_base64 ) )
   $keyfileext = Sensitive( base64('decode', $keyfileext_base64 ) )
   $rxkad_keytab = Sensitive( base64('decode', $rxkad_keytab_base64 ) )
 
-  file { '/etc/openafs/server/CellServDB':
+  file { "${configpath}/server/CellServDB":
     content => $cellservdb,
-    mode   => '0644',
+    mode    => '0644',
   }
-  file { '/etc/openafs/CellServDB':
+  file { "${configpath}/CellServDB":
     ensure => 'link',
-    target => '/etc/openafs/server/CellServDB',
+    target => "${configpath}/server/CellServDB",
   }
-  file { '/etc/openafs/server/krb.conf':
+  file { "${configpath}/server/krb.conf":
     content => "${krb_conf}\n",
   }
-  file { '/etc/openafs/server/License':
+  file { "${configpath}/server/License":
     content => Sensitive($license),
   }
-  file { '/etc/openafs/server/ThisCell':
+  file { "${configpath}/server/ThisCell":
     content => "${thiscell}\n",
   }
-  file { '/etc/openafs/server/UserList':
+  file { "${configpath}/server/UserList":
     content => $userlist,
   }
-  file { '/etc/openafs/server/KeyFile':
+  file { "${configpath}/server/KeyFile":
     content => $keyfile,
   }
-  file { '/etc/openafs/server/KeyFileExt':
+  file { "${configpath}/server/KeyFileExt":
     content => $keyfileext,
   }
-  file { '/etc/openafs/server/rxkad.keytab':
+  file { "${configpath}/server/rxkad.keytab":
     content => $rxkad_keytab,
   }
 
