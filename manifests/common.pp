@@ -1,9 +1,13 @@
 # @summary Configure settings common to all OpenAFS services
 #
+# @param viceetcdir
+#   String of dirctory to AFS common configuration directory (viceetcdir)
+#
 # @example
 #   include openafs::common
-class openafs::common {
-
+class openafs::common (
+  String $viceetcdir,
+) {
   $puppet_file_header = '# This file is managed by Puppet; changes may be overwritten'
 
 # WERE TESTING FORCING UPDATES TO /etc/hosts - DO NOT THINK NEEDED
@@ -45,11 +49,10 @@ class openafs::common {
     ],
   }
 
-  file { '/etc/openafs/CellAlias':
+  file { "${viceetcdir}/CellAlias":
     content => $cellalias,
   }
-  file { '/etc/openafs/ThisCell':
+  file { "${viceetcdir}/ThisCell":
     content => "${thiscell}\n",
   }
-
 }

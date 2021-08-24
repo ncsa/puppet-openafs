@@ -1,0 +1,11 @@
+---
+openafs::repos::repos:
+  openafs:
+    descr: "SNA OpenAFS"
+    ensure: "present"
+    enabled: true
+    baseurl: "https://download.sinenomine.net/openafs/rpms/el$releasever/$basearch/"
+    skip_if_unavailable: true
+    gpgcheck: true
+    gpgkey: "https://download.sinenomine.net/openafs/rpms/RPM-GPG-KEY-sinenomine-pmanager"
+    repo_gpgcheck: false

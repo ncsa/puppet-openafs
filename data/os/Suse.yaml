@@ -6,8 +6,8 @@ openafs::client::packages::packages:
   - "dkms-openafs"
   - "openafs"
   - "openafs-client"
-  - "openafs-docs"
-  - "openafs-krb5"
+  #- "openafs-docs"
+  #- "openafs-krb5"
 openafs::client::profile_files:
   /etc/profile.d/00-openafs.csh: |
     # This file is managed by Puppet.
@@ -52,6 +52,8 @@ openafs::client::service::enable: true
 openafs::client::service::ensure: "running"
 openafs::client::service::service_name: "openafs-client"
 
+openafs::common::viceetcdir: "/etc/openafs"   # non-transarc
+
 openafs::database_server::packages::packages:
 #  - "dkms-openafs"
 #  - "openafs"
@@ -70,8 +72,8 @@ openafs::file_server::packages::packages:
   - "dkms-openafs"
   - "openafs"
   - "openafs-client"
-  - "openafs-docs"
-  - "openafs-krb5"
+  #- "openafs-docs"
+  #- "openafs-krb5"
   - "openafs-server"
 #  - "openafs-transarc-server"
 openafs::file_server::service::enable: true
@@ -80,11 +82,15 @@ openafs::file_server::service::service_name: "openafs-server"
 
 openafs::repos::repos:
   openafs:
-    descr: "SNA OpenAFS"
+    descr: "Sine Nomine Associates: OpenAFS latest stable release"
     ensure: "present"
     enabled: true
-    baseurl: "https://download.sinenomine.net/openafs/rpms/rhel$releasever/$basearch/"
-    skip_if_unavailable: true
+    baseurl: "https://download.sinenomine.net/openafs/rpms/openSUSEleap_$releasever/$basearch"
     gpgcheck: true
     gpgkey: "https://download.sinenomine.net/openafs/rpms/RPM-GPG-KEY-sinenomine-pmanager"
-    repo_gpgcheck: false
+    type: "yum"
+
+openafs::server_common::afsbackupdir: "/var/openafs/backup"  # non-transarc
+openafs::server_common::afsconfdir: "/etc/openafs/server"    # non-transarc
+openafs::server_common::afslocaldir: "/var/openafs"          # non-transarc
+openafs::server_common::afslogsdir: "/var/openafs/logs"      # non-transarc

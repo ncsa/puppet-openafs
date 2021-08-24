@@ -16,9 +16,7 @@ class openafs::file_server::firewall (
   String        $proto,
   Array[String] $sources,
 ) {
-
-  $sources.each | $location, $source |
-  {
+  $sources.each | $location, $source | {
     firewall { "200 allow OpenAFS via ${proto} from ${source}":
       proto  => $proto,
       dport  => $dports,
@@ -26,5 +24,4 @@ class openafs::file_server::firewall (
       action => 'accept',
     }
   }
-
 }
