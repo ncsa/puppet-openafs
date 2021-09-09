@@ -22,7 +22,6 @@ openafs::server_common::license: {}
 openafs::server_common::rxkad_keytab_base64: {}
 openafs::server_common::userlist: |
   admin
-  backup
   vdvadmin
   adminl
 
