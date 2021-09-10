@@ -57,7 +57,7 @@ class openafs::server_common (
 
   file { '/etc/openafs/server/CellServDB':
     content => $cellservdb,
-    mode   => '0644',
+    mode    => '0644',
   }
   file { '/etc/openafs/CellServDB':
     ensure => 'link',
@@ -83,6 +83,10 @@ class openafs::server_common (
   }
   file { '/etc/openafs/server/rxkad.keytab':
     content => $rxkad_keytab,
+  }
+  file { '/var/openafs/NetInfo':
+    content => $facts['ipaddress'],
+    mode    => '0644',
   }
 
 }
