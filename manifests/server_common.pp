@@ -63,16 +63,16 @@ class openafs::server_common (
 
   file { $afslocaldir_parent_path :
     ensure => 'directory',
-    mode   => '0700',
+    mode   => '0755',
   }
   file { $afslocaldir :
     ensure => 'directory',
     mode   => '0700',
   }
-  file { "${afslocaldir}/local" :
-    ensure => 'directory',
-    mode   => '0750',
-  }
+  # file { "${afslocaldir}/local" :
+  #   ensure => 'directory',
+  #   mode   => '0750',
+  # }
 
   file { $afsbackupdir :
     ensure => 'directory',
@@ -89,7 +89,7 @@ class openafs::server_common (
 
   file { $afsconfdir :
     ensure => 'directory',
-    mode   => '0700',
+    mode   => '0755',
   }
 
   ensure_resources('file', $files )
